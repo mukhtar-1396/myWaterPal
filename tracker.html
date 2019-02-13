@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tracker</title>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="plugin.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="plugin.js"></script>
+		<script src="script.js"></script>
+	</head>
+	<body>
+		<!-- <div class="my-progress-bar"></div>
+		<div class="buttons">
+			<button class="btn btn-default btn-lg" id="b1">Add a Cup</button>
+			<button class="btn btn-default btn-lg" id="b2">Reset</button>			
+		</div> -->
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+
+		<!-- Experiment with Horizontal progress bar -->
+		<div id="horizontal-progress-bar">
+			<progress id="progress" value='0' max='100'></progress>
+		</div>
+		<div class="buttons">
+			<a class='button' data-diff='-100'>Reset</a>
+			<a class='button' data-diff='13'>Add Cup</a>
+		</div>	
+		<script>
+			// changing progressbar when button is clicked
+			$(".button").click(function () {
+			    animateProgress(parseInt($(this).data('diff')));
+			});
+
+			// animate progress by a step indicated by diff
+			function animateProgress(diff) {
+			    var currValue = $("#progress").val();
+			    var toValue = currValue + diff;
+			    
+			    toValue = toValue < 0 ? 0 : toValue;
+			    toValue = toValue > 100 ? 100 : toValue;
+
+			    $("#progress").animate({'value': toValue}, 500);
+			}
+		</script>
+	</body>
+</html>
