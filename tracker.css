@@ -4,25 +4,11 @@ body {
     padding-top: 130px;
 }
 
-.circular-progress-bar {
-    position: relative;
-    margin: 0 auto;
-    /*padding-top: 140px;*/
 
+.button {
+    cursor: pointer;
 }
 
-.progress-percentage {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-/*    padding-top: 140px;*/
-    font-size: 60px;
-    font-family: 'Open Sans', sans-serif;
-
-}
 
 .buttons {
     text-align: center;
@@ -81,5 +67,23 @@ progress::-webkit-progress-value {
 #horizontal-progress-bar {
     text-align: center;
     padding-top: 100px;
-    padding-left: 325px;
+    padding-left: 355px;
+}
+
+/*display % on progress bar*/
+progress:after {
+    display: inline-block;
+    /*content: attr(value)'%';*/
+    position: relative;
+    -webkit-transform-origin: 0 100%;
+    -webkit-transform: rotate(90deg);
+    -moz-transform-origin: 0 100%;
+    -moz-transform: rotate(90deg);
+    -ms-transform-origin: 0 100%;
+    -ms-transform: rotate(90deg);
+    transform-origin: 0 100%;
+    transform: rotate(90deg);
+    text-align: center;
+    padding-right: 30px;
+
 }

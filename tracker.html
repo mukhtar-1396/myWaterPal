@@ -3,10 +3,9 @@
 	<head>
 		<title>Tracker</title>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="plugin.css">
+		<link rel="stylesheet" type="text/css" href="tracker.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="plugin.js"></script>
-		<script src="script.js"></script>
+		<script type='text/javascript' src='knockout-3.2.0.js'></script>
 	</head>
 	<body>
 		<!-- <div class="my-progress-bar"></div>
@@ -25,9 +24,10 @@
 			<progress id="progress" value='0' max='100'></progress>
 		</div>
 		<div class="buttons">
-			<a class='button' data-diff='-100'>Reset</a>
-			<a class='button' data-diff='13'>Add Cup</a>
-		</div>	
+			<a class='button btn btn-default' data-bind='click: resetClicks' data-diff='-100'>Reset</a>
+			<a class='button btn btn-default' data-bind='click: registerClick' data-diff='13'>Add Cup</a>
+		</div>
+		<div>You've drank <span data-bind='text: numberOfClicks'>&nbsp;</span> cup(s) today!</div>
 		<script>
 			// changing progressbar when button is clicked
 			$(".button").click(function () {
@@ -43,7 +43,27 @@
 			    toValue = toValue > 100 ? 100 : toValue;
 
 			    $("#progress").animate({'value': toValue}, 500);
+
+			    /*localStorage.setItem('currentProgress', JSON.stringfy(toValue));*/
 			}
+
+			//display number of cups drank today
+
+			var ClickCounterViewModel = function() {
+			    this.numberOfClicks = ko.observable(0);
+			 
+			    this.registerClick = function() {
+			        this.numberOfClicks(this.numberOfClicks() + 1);
+			    };
+			    this.resetClicks = function() {
+			        this.numberOfClicks(0);
+			    };
+			    this.hasClickedTooManyTimes = ko.pureComputed(function() {
+			        return this.numberOfClicks();
+			    }, this);
+			};
+			 
+			ko.applyBindings(new ClickCounterViewModel());
 		</script>
 	</body>
 </html>
