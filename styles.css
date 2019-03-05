@@ -31,12 +31,10 @@ html {
 
 #sub-heading {
 	color: white;
-	
 }
 
 hr {
 	width: 600px;
-
 }
 
 
@@ -47,13 +45,29 @@ hr {
 }
 
 .navbar-default .navbar-brand {
+        color: white;
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+/Edge */
+        user-select: none; /* Standard */
+}
+
+.navbar .navbar-brand:hover {
     color: white;
 }
 
 
 
+
+
+
 .navbar-default .navbar-nav>li>a {
     color: white;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+        color: black;
+        font-weight: bold;
 }
 
 .navbar {
@@ -70,8 +84,8 @@ hr {
     bottom: 0;
     left: 0;
     /*padding: 1rem;*/
-    text-align: center;
-}
+        text-align: center;
+    }
 
 
 
@@ -130,7 +144,8 @@ h2.active {
 
 
 
-/* FORM TYPOGRAPHY*/
+/* FORM TYPOGRAPHY
+    LOG IN PAGE*/
 
 input[type=button], input[type=submit], input[type=reset]  {
   background-color: #56baed;
