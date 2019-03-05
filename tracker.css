@@ -45,17 +45,12 @@ progress::-webkit-progress-bar {
     border-radius:40px 0px 0px 40px;
     background-color: white;
 }
-progress::-webkit-progress-value {
-    border: 
+progress::-webkit-progress-value { 
     height: 200px;
     border-radius: 35px 0px 0px 35px;
     background-color: #24C0E3;
 }
-/*progress::-moz-progress-bar {
-    border: 0;
-    height: 80px;
-    border-radius: 20px;
-}*/
+
 .button {
     display: inline-block;
     border-radius: 4px;
