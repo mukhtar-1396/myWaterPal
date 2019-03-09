@@ -46,41 +46,97 @@
             </div>
             <div>You've drank <span data-bind='text: numberOfClicks'>&nbsp;</span> cup(s) today!</div>
             <script>
+                // We use consts here for the keys for good practice, and to make sure the key is always correct
+                const WATER_CONSUMED = 'waterConsumed';
+                const CUPS_CONSUMED = 'cupsConsumed';
+
+                /**
+                 * This ensures the dom is ready before executing the code
+                 * https://learn.jquery.com/using-jquery-core/document-ready/
+                 */
+                $(function () {
+                    setAndAnimateProgress(getLocalStorage(WATER_CONSUMED));
+                    ko.applyBindings(new ClickCounterViewModel());
+                });
+
+                /**
+                 * gets Local Storage Value
+                 * @param key
+                 * @returns {number}
+                 */
+                const getLocalStorage = (key) => {
+                    let waterConsumed = localStorage.getItem(key);
+
+                    // if undefined, meaning no key exists...
+                    if (!waterConsumed){
+                        localStorage.setItem(key, '0');
+                        return 0;
+                    }
+
+                    // convert value stored as a string to a number
+                    return parseInt(waterConsumed, 10);
+                };
+
+                /**
+                 * sets Local Storage Value
+                 * @param key
+                 * @param amount
+                 */
+                const setLocalStorage = (key, amount) => {
+                    localStorage.setItem(key, amount.toString());
+                };
+
+                /**
+                 * sets and animates the water value
+                 * @param value
+                 */
+                const setAndAnimateProgress = (value) => {
+                    $("#progress").animate({value}, 500);
+                };
+
                 // changing progressbar when button is clicked
                 $(".button").click(function () {
                     animateProgress(parseInt($(this).data('diff')));
                 });
 
-                // animate progress by a step indicated by diff
+                /**
+                 * animate progress by a step indicated by diff
+                 * @param diff
+                 */
                 function animateProgress(diff) {
-                    var currValue = $("#progress").val();
+                    // var currValue = $("#progress").val();
+                    var currValue = getLocalStorage(WATER_CONSUMED);
                     var toValue = currValue + diff;
 
                     toValue = toValue < 0 ? 0 : toValue;
                     toValue = toValue > 100 ? 100 : toValue;
 
-                    $("#progress").animate({ 'value': toValue }, 500);
+                    setLocalStorage(WATER_CONSUMED, toValue);
 
-                    /*localStorage.setItem('currentProgress', JSON.stringfy(toValue));*/
+                    setAndAnimateProgress(toValue);
                 }
 
-                //display number of cups drank today
-
+                /**
+                 * display number of cups drank today
+                 * @constructor
+                 */
                 var ClickCounterViewModel = function () {
-                    this.numberOfClicks = ko.observable(0);
+                    this.numberOfClicks = ko.observable(getLocalStorage(CUPS_CONSUMED));
 
                     this.registerClick = function () {
-                        this.numberOfClicks(this.numberOfClicks() + 1);
+                        const cupsConsumed = this.numberOfClicks() + 1;
+                        this.numberOfClicks(cupsConsumed);
+                        setLocalStorage(CUPS_CONSUMED, cupsConsumed);
                     };
                     this.resetClicks = function () {
                         this.numberOfClicks(0);
+                        setLocalStorage(CUPS_CONSUMED, 0);
                     };
                     this.hasClickedTooManyTimes = ko.pureComputed(function () {
                         return this.numberOfClicks();
                     }, this);
                 };
 
-                ko.applyBindings(new ClickCounterViewModel());
             </script>
         </div>
     </div>
@@ -96,7 +152,7 @@
     <div class="footer">
         <!-- Copyright -->
         <div class=" text-center py-3">
-            © 2019 Copyright:
+            ï¿½ 2019 Copyright:
             <a href="https://mdbootstrap.com/education/bootstrap/"> mywaterpal.com</a>
         </div>
     </div>
