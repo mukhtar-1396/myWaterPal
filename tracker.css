@@ -1,88 +1,106 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+<div class="transbox" >
+<div id="trackerContent" >
+<div id="horizontal-progress-bar" >
+<progress id="progress" value='0' max='100' > </progress >
+</div >
+<div class="buttons" >
+<a class='button btn btn-default' data-bind='click: resetClicks' data-diff='-100' > Reset</a >
+<a class='button btn btn-default' data-bind='click: registerClick' data-diff='13' > + </a >
+</div >
+<div > You've drank <span data-bind='text: numberOfClicks'>&nbsp;</span> cup(s) today!</div>
+<script >
+// We use consts here for the keys for good practice, and to make sure the key is always correct
+const WATER_CONSUMED = 'waterConsumed';
+const CUPS_CONSUMED = 'cupsConsumed';
+/**
+             * This ensures the dom is ready before executing the code
+             * https://learn.jquery.com/using-jquery-core/document-ready/
+             */
+$(function () {
+                setAndAnimateProgress(getLocalStorage(WATER_CONSUMED));
+                ko.applyBindings(new ClickCounterViewModel());
+            });
+/**
+             * gets Local Storage Value
+             * @param key
+             * @returns {number}
+             */
+const getLocalStorage = (key) = > {
+    let waterConsumed = localStorage.getItem(key);
+    // if undefined, meaning no key exists... if (!waterConsumed)
 
-body {
-    padding-top: 130px;
-}
-
-
-.button {
-    cursor: pointer;
-}
-
-
-.buttons {
-    text-align: center;
-    -webkit-user-select: none; /* Chrome all / Safari all */
-    -moz-user-select: none; /* Firefox all */
-    -ms-user-select: none; /* IE 10+ */
-    user-select: none; /* Likely future */
-}
-
-/*Experiment for horizontal progress bar*/
-#progress {
-    min-width: 350px;
-    height: 100px;
-    text-align: center;
-}
-progress {
-    border: 0;
-    height: 80px;
-    border-radius: 80px;
-    -webkit-transform-origin: 0 100%;
-    -webkit-transform: rotate(270deg);
-    -moz-transform-origin: 0 100%;
-    -moz-transform: rotate(270deg);
-    -ms-transform-origin: 0 100%;
-    -ms-transform: rotate(270deg);
-    transform-origin: 0 100%;
-    transform: rotate(270deg);
-}
-progress::-webkit-progress-bar {
-    border-top: 5px solid grey;
-    border-bottom: 5px solid grey;
-    border-left: 5px solid grey;
-    height: 200px;
-    border-radius:40px 0px 0px 40px;
-    background-color: white;
-}
-progress::-webkit-progress-value { 
-    height: 200px;
-    border-radius: 35px 0px 0px 35px;
-    background-color: #24C0E3;
+{
+    localStorage .setItem(key, '0');
+    return 0;
 }
 
-.button {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    background: #ddd;
-    padding: 8px 16px;
-    margin: 8px;
-}
-.button:hover {
-    box-shadow: inset 0 0 10px rgba(0,0,0,.1);
+// convert value stored as a string to a number
+return parseInt(waterConsumed, 10);
 }
 
-#horizontal-progress-bar {
-    text-align: center;
-    padding-top: 100px;
-    padding-left: 355px;
+;
+/**
+             * sets Local Storage Value
+             * @param key
+             * @param amount
+             */
+const setLocalStorage = (key, amount) = > {
+    localStorage .setItem(key, amount.toString());
 }
 
-/*display % on progress bar*/
-progress:after {
-    display: inline-block;
-    /*content: attr(value)'%';*/
-    position: relative;
-    -webkit-transform-origin: 0 100%;
-    -webkit-transform: rotate(90deg);
-    -moz-transform-origin: 0 100%;
-    -moz-transform: rotate(90deg);
-    -ms-transform-origin: 0 100%;
-    -ms-transform: rotate(90deg);
-    transform-origin: 0 100%;
-    transform: rotate(90deg);
-    text-align: center;
-    padding-right: 30px;
-
+;
+/**
+             * sets and animates the water value
+             * @param value
+             */
+const setAndAnimateProgress = (value) = > {
+    $("#progress").animate({value}, 500);
 }
+
+;
+// changing progressbar when button is clicked
+$(".button").click(function () {
+                animateProgress(parseInt($(this).data('diff')));
+            });
+/**
+             * animate progress by a step indicated by diff
+             * @param diff
+             */
+function animateProgress(diff) {
+    // var currValue = $("#progress").val();
+    var currValue = getLocalStorage(WATER_CONSUMED);
+    var toValue = currValue + diff;
+    toValue = toValue < 0 ? 0 : toValue;
+    toValue = toValue > 100 ? 100 : toValue;
+    setLocalStorage(WATER_CONSUMED, toValue);
+    setAndAnimateProgress(toValue);
+}
+/**
+             * display number of cups drank today
+             * @constructor
+             */
+var ClickCounterViewModel = function () {
+    this .numberOfClicks = ko.observable(getLocalStorage(CUPS_CONSUMED));
+    this .registerClick = function ()
+
+{
+    const cupsConsumed = this.numberOfClicks() + 1;
+    this .numberOfClicks(cupsConsumed);
+    setLocalStorage(CUPS_CONSUMED, cupsConsumed);
+}
+
+;
+this.resetClicks = function () {
+    this .numberOfClicks(0);
+    setLocalStorage(CUPS_CONSUMED, 0);
+}
+
+;
+this.hasClickedTooManyTimes = ko.pureComputed(function () {
+                    return this.numberOfClicks();
+                }, this);
+}
+;
+</script >
+</div >
+</div >

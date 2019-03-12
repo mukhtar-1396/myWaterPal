@@ -351,6 +351,7 @@ input[type=text]:placeholder {
     color: white;
     min-height: 800px;
     padding-top: 90px;
+    border-radius: 25px;
 }
 
 #trackerContent {
@@ -432,4 +433,16 @@ progress:after {
     transform: rotate(90deg);
     text-align: center;
     padding-right: 30px;
+}
+
+
+#reduceCup {
+    margin-right: 300px;
+    font-size: 22pt;
+    border-radius: 200px;
+}
+
+#increaseCup {
+    font-size: 22pt;
+    border-radius: 200px;
 }
