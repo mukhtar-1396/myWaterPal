@@ -13,7 +13,7 @@ body {
 
 #content {
 	text-align: center;
-	padding-top: 15%;
+    padding-top: 5%;
 }
 
 
@@ -354,6 +354,24 @@ input[type=text]:placeholder {
     border-radius: 25px;
 }
 
+.transbox2 {
+    background: rgba(0, 0, 0, 0.6);
+    font-weight: bold;
+    color: white;
+    border-radius: 25px;
+    padding-bottom: 5%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+
+}
+
+@media (min-width: 1200px) {
+    .transbox2 {
+        max-width: 700px;
+    }
+}
+
 #trackerContent {
     text-align: center;
     padding-top: 15%;
@@ -440,6 +458,7 @@ progress:after {
     margin-right: 300px;
     font-size: 22pt;
     border-radius: 200px;
+    width: 2.29%;
 }
 
 #increaseCup {
