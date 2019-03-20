@@ -38,22 +38,20 @@
 <div class="transbox">
     <div id="trackerContent">
         <div class="buttonsTop">
-            <a class="btn btn-danger" data-bind='click: decreaseClicks' id="reduceCup" data-diff="-13">-</a>
-            <a class='btn btn-success' id="increaseCup" data-bind='click: registerClick, disable: hasClickedTooManyTimes' data-diff='13'>+</a>
+            <a class="btn btn-danger"  id="reduceCup" data-diff="-13">-</a>
+            <a class='btn btn-success' id="increaseCup" data-diff='13'>+</a>
         </div>
         <div id="horizontal-progress-bar">
             <progress id="progress" value='0' max='100'></progress>
         </div>
         <div class="buttons">
-            <a class='button btn btn-default' data-bind='click: resetClicks' data-diff='-100'>Reset</a>
+            <a class='button btn btn-default' id='resetClicks' data-diff='-100'>Reset</a>
 
         </div>
-        <div>You've drank <span data-bind='text: numberOfClicks'>&nbsp;</span> cup(s) today!</div>
-        <div data-bind='visible: hasClickedTooManyTimes'>
-            You have reached your daily target Hooray!
-        </div>
+        <div id="numberOfCups">You've drank 0 cup(s) today!</div>
+        <div id="target"></div>
             <script>
-                // changing progressbar when button is clicked
+                // changing progressbar when button is clicked 
                 $(".btn").click(function () {
                     animateProgress(parseInt($(this).data('diff')));
                 });
@@ -65,26 +63,48 @@
                     toValue = toValue > 100 ? 100 : toValue;
                     $("#progress").animate({ 'value': toValue }, 500);
                 }
-                //display number of cups drank today
-                var ClickCounterViewModel = function () {
-                    this.numberOfClicks = ko.observable(0);
-                    this.registerClick = function () {
-                        this.numberOfClicks(this.numberOfClicks() + 1);
-                    };
+                
+                var minusBtn = document.getElementById("reduceCup");
+                var plusBtn = document.getElementById("increaseCup");
+                var resetBtn = document.getElementById("resetClicks")
+                var numOfCups = document.getElementById("numberOfCups");
+                var target = document.getElementById("target")
+                var count = 0;
 
-                    this.resetClicks = function () {
-                        this.numberOfClicks(0);
-                    };
+                                          
+                plusBtn.onclick = function () {
+                    count += 1;
+                    numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
 
-                    this.decreaseClicks = function () {
-                        this.numberOfClicks(this.numberOfClicks() - 1);
-                    };
-
-                    this.hasClickedTooManyTimes = ko.computed(function () {
-                        return this.numberOfClicks() >= 8;
-                    }, this);
+                    if (count >= 8) {
+                        numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+                        target.innerHTML = "You have reached your daily target Hooray!"
+                        count = 8;
+                        numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+                    }
                 };
-                ko.applyBindings(new ClickCounterViewModel());
+
+                minusBtn.onclick = function () {
+                    count -= 1;
+                    numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+                    target.innerHTML = " "
+
+                    if (count < 0) {
+                        alert("Sorry, you cant go below 0");
+                        count = 0;
+                        numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+                    }
+
+                };
+
+                resetBtn.onclick = function () {
+                    count = 0;
+                    numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+                    target.innerHTML = " "
+                };
+
+             
+
             </script>
         </div>
     </div>
