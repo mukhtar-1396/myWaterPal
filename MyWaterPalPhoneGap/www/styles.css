@@ -490,5 +490,13 @@ h1 {
 }
 
 #harms {
-    font-size: 14pt;
+    font-size: 12pt;
+}
+
+#dailyGoal {
+    font-size: 8pt;
+}
+
+#dailyGoal2 {
+    font-size: 8pt;
 }
