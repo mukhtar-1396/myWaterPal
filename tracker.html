@@ -36,9 +36,11 @@
     </div><!-- /.container-fluid -->
 </nav>
 <div class="transbox">
+    <h1>Water Tracker</h1>
+    <hr class="my-4">
     <div id="trackerContent">
         <div class="buttonsTop">
-            <a class="btn btn-danger"  id="reduceCup" data-diff="-13">-</a>
+            <a class="btn btn-danger" id="reduceCup" data-diff="-13">-</a>
             <a class='btn btn-success' id="increaseCup" data-diff='13'>+</a>
         </div>
         <div id="horizontal-progress-bar">
@@ -50,67 +52,67 @@
         </div>
         <div id="numberOfCups">You've drank 0 cup(s) today!</div>
         <div id="target"></div>
-            <script>
-                // changing progressbar when button is clicked 
-                $(".btn").click(function () {
-                    animateProgress(parseInt($(this).data('diff')));
-                });
-                // animate progress by a step indicated by diff
-                function animateProgress(diff) {
-                    var currValue = $("#progress").val();
-                    var toValue = currValue + diff;
-                    toValue = toValue < 0 ? 0 : toValue;
-                    toValue = toValue > 100 ? 100 : toValue;
-                    $("#progress").animate({ 'value': toValue }, 500);
+        <script>
+            // changing progressbar when button is clicked
+            $(".btn").click(function () {
+                animateProgress(parseInt($(this).data('diff')));
+            });
+            // animate progress by a step indicated by diff
+            function animateProgress(diff) {
+                var currValue = $("#progress").val();
+                var toValue = currValue + diff;
+                toValue = toValue < 0 ? 0 : toValue;
+                toValue = toValue > 100 ? 100 : toValue;
+                $("#progress").animate({ 'value': toValue }, 500);
+            }
+
+
+            // counts number of cups drank
+
+            var minusBtn = document.getElementById("reduceCup");
+            var plusBtn = document.getElementById("increaseCup");
+            var resetBtn = document.getElementById("resetClicks")
+            var numOfCups = document.getElementById("numberOfCups");
+            var target = document.getElementById("target")
+            var count = 0;
+
+
+            plusBtn.onclick = function () {
+                count += 1;
+                numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+
+                if (count >= 8) {
+                    numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+                    target.innerHTML = "You have reached your daily target Hooray!"
+                    count = 8;
+                    numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
                 }
+            };
 
+            minusBtn.onclick = function () {
+                count -= 1;
+                numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+                target.innerHTML = " "
 
-                // counts number of cups drank
-                
-                var minusBtn = document.getElementById("reduceCup");
-                var plusBtn = document.getElementById("increaseCup");
-                var resetBtn = document.getElementById("resetClicks")
-                var numOfCups = document.getElementById("numberOfCups");
-                var target = document.getElementById("target")
-                var count = 0;
-
-                                          
-                plusBtn.onclick = function () {
-                    count += 1;
-                    numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
-
-                    if (count >= 8) {
-                        numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
-                        target.innerHTML = "You have reached your daily target Hooray!"
-                        count = 8;
-                        numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
-                    }
-                };
-
-                minusBtn.onclick = function () {
-                    count -= 1;
-                    numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
-                    target.innerHTML = " "
-
-                    if (count < 0) {
-                        alert("Sorry, you cant go below 0");
-                        count = 0;
-                        numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
-                    }
-
-                };
-
-                resetBtn.onclick = function () {
+                if (count < 0) {
+                    alert("Sorry, you cant go below 0");
                     count = 0;
                     numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
-                    target.innerHTML = " "
-                };
+                }
 
-             
+            };
 
-            </script>
-        </div>
+            resetBtn.onclick = function () {
+                count = 0;
+                numOfCups.innerHTML = "You've drank " + count + " cup(s) today!";
+                target.innerHTML = " "
+            };
+
+
+
+        </script>
     </div>
+</div>
 
 
 

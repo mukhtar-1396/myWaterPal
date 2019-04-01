@@ -350,7 +350,7 @@ input[type=text]:placeholder {
     font-weight: bold;
     color: white;
     min-height: 800px;
-    padding-top: 90px;
+    padding-top: 30px;
     border-radius: 25px;
 }
 
@@ -469,4 +469,12 @@ progress:after {
 
 h1 {
     text-align: center;
+    font-size: 42pt;
+    font-weight: bold;
+}
+
+
+
+#aboutUsTxt {
+    padding-left: 20px;
 }
